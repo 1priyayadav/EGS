@@ -6,14 +6,16 @@ We explicitly do NOT overwrite raw data, nor do we perform destructive edits on 
 
 ## Core Models
 
-### 1. Ingestion Layer
-*   **DataSource:** Defines the origin system (e.g., SAP, Utility Portal, Concur).
+### 1. Ingestion Layer & Multi-Tenancy
+*   **Tenant:** The root model. Every single record in the database is strictly segregated by `Tenant`, ensuring enterprise data isolation for multi-tenant SaaS deployments.
+*   **DataSource:** Defines the origin system (e.g., SAP, Utility Portal, Concur) and is bound to a specific tenant.
 *   **SourceFieldMapping:** Configurable rules mapping chaotic source fields (e.g., `WERKS`, `Plant`, `Facility`) to canonical internal fields (`plant_code`). This allows dynamic onboarding of new CSV formats without code changes.
 *   **IngestionBatch:** A single upload event (file or webhook payload) to group records.
 *   **RawIngestionRecord:** The immutable source of truth. Stores the exact JSON/CSV row as `raw_payload`. Includes a cryptographic `record_hash` to natively prevent duplicates.
 
 ### 2. Normalization & Review Layer
 *   **EmissionRecord:** The canonical unit of work for an analyst.
+    *   **Scope Categorization:** Every record is strictly classified into `category` (SCOPE_1, SCOPE_2, SCOPE_3) and `activity_type` (Fuel, Electricity, Flight) based on the ingestion source.
     *   **3-Way Payload Lineage:** 
         *   Linked `raw_record` (immutable)
         *   `auto_normalized_payload` (machine-inferred)

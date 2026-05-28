@@ -9,8 +9,11 @@ Decided to implement `SourceFieldMapping` rather than hardcoding column names in
 ## 3. Explicit Versioning over Mutation
 Decided to implement a superseding record strategy for duplicate/revised batches rather than mutating approved records, protecting the audit trail. If a utility bill is re-uploaded with a correction, we insert the new record and update `is_active_version=False` on the old one, pointing `superseded_by` to the new ID.
 
-## 4. Scope Categorization Mapping
-Decided to strictly map SAP Fuel to Scope 1, Utility Electricity to Scope 2, and Corporate Travel to Scope 3 at the ingestion layer based on the `DataSource` configuration, removing ambiguity downstream.
+## 4. Scope Categorization & Source Subsets
+Decided to strictly limit the boundaries of the prototype to very specific subsets of each source:
+*   **SAP (ERP):** We handle ONLY stationary fuel consumption (mapped strictly to Scope 1). We explicitly ignored purchased goods/services, capital goods, and logistics, which usually represent 80% of SAP data but are too complex for a 4-day ingestion pipeline.
+*   **Utility Portals:** We handle ONLY electricity consumption (mapped strictly to Scope 2). We explicitly ignored natural gas, water, and waste, which use entirely different units (CCF, Gallons) and require vastly different anomaly detection thresholds.
+*   **Corporate Travel:** We handle ONLY commercial flights (mapped strictly to Scope 3 - Category 6). We explicitly ignored hotel stays, rental cars, and rail travel, which require different APIs and calculation methodologies.
 
 ## 5. Explicit 3-Way Payload Lineage
 Decided to separate `raw_payload`, `auto_normalized_payload`, and `analyst_corrected_payload`. If an auditor asks "Why is this number X?", we can prove exactly what the client uploaded, what our code assumed, and what the analyst manually overwrote.
