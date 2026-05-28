@@ -14,7 +14,8 @@ const ReviewQueue = () => {
   const fetchRecords = async () => {
     try {
       const endpoint = filter === 'FLAGGED' ? 'flagged' : 'pending';
-      const response = await axios.get(`http://localhost:8000/api/records/${endpoint}/`);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await axios.get(`${API_URL}/api/records/${endpoint}/`);
       setRecords(response.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +41,8 @@ const ReviewQueue = () => {
     if (!selectedRecord) return;
     
     try {
-      await axios.post(`http://localhost:8000/api/records/${selectedRecord.id}/review/`, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      await axios.post(`${API_URL}/api/records/${selectedRecord.id}/review/`, {
         action,
         corrected_payload: payload,
         correction_reason: reason

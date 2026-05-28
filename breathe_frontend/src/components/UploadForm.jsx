@@ -17,6 +17,7 @@ const UploadForm = () => {
     setStatus("Uploading...");
     
     try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       if (sourceType === '3') {
         // Mock JSON webhook for Travel data
         const payload = [
@@ -24,7 +25,7 @@ const UploadForm = () => {
           { id: "T1002", travel_type: "Flight", origin_airport: "XXX", destination_airport: "SFO", traveler_email: "sales@company.com" }
         ];
         
-        await axios.post('http://localhost:8000/api/ingestion/upload_json/', {
+        await axios.post(`${API_URL}/api/ingestion/upload_json/`, {
           tenant_id: 1,
           data_source_id: 3,
           payload: payload
@@ -35,7 +36,7 @@ const UploadForm = () => {
         formData.append('tenant_id', 1);
         formData.append('data_source_id', sourceType);
 
-        await axios.post('http://localhost:8000/api/ingestion/upload_csv/', formData, {
+        await axios.post(`${API_URL}/api/ingestion/upload_csv/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

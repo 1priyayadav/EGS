@@ -13,7 +13,8 @@ const Dashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/records/stats/');
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await axios.get(`${API_URL}/api/records/stats/`);
       setStats(response.data);
     } catch (err) {
       console.error('Error fetching stats:', err);
