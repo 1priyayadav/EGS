@@ -1,6 +1,6 @@
 # Backend
 breathe_backend/venv/
-breathe_backend/__pycache__/
+__pycache__/
 breathe_backend/db.sqlite3
 breathe_backend/.env
 
