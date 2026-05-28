@@ -1,0 +1,29 @@
+[
+  {
+    "pnr": "XY12AB",
+    "travel_type": "Flight",
+    "origin_airport": "SFO",
+    "destination_airport": "LHR",
+    "cabin_class": "Business",
+    "traveler_email": "exec@company.com",
+    "booking_date": "2023-10-01T14:30:00Z"
+  },
+  {
+    "pnr": "XY12AC",
+    "travel_type": "Flight",
+    "origin_airport": "XXX",
+    "destination_airport": "JFK",
+    "cabin_class": "Economy",
+    "traveler_email": "sales@company.com",
+    "booking_date": "2023-10-05T09:15:00Z"
+  },
+  {
+    "pnr": "ZZ99QQ",
+    "travel_type": "Flight",
+    "origin_airport": "ORD",
+    "destination_airport": "DFW",
+    "cabin_class": "Economy",
+    "traveler_email": "",
+    "booking_date": "2023-10-10T11:00:00Z"
+  }
+]

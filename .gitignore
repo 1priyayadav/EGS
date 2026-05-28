@@ -1,0 +1,20 @@
+# Backend
+breathe_backend/venv/
+breathe_backend/__pycache__/
+breathe_backend/db.sqlite3
+breathe_backend/.env
+
+# Frontend
+breathe_frontend/node_modules/
+breathe_frontend/dist/
+breathe_frontend/.env
+breathe_frontend/.DS_Store
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

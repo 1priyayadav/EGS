@@ -1,0 +1,32 @@
+services:
+  # Backend Django API
+  - type: web
+    name: breathe-backend
+    env: python
+    buildCommand: "cd breathe_backend && pip install -r requirements.txt && python manage.py migrate"
+    startCommand: "cd breathe_backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: breathe-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+
+  # Frontend React App (Vite)
+  - type: web
+    name: breathe-frontend
+    env: static
+    buildCommand: "cd breathe_frontend && npm install && npm run build"
+    staticPublishPath: "./breathe_frontend/dist"
+    envVars:
+      - key: VITE_API_URL
+        # In a real deployment, this would be the backend URL
+        value: "https://breathe-backend.onrender.com"
+        
+databases:
+  - name: breathe-db
+    databaseName: breathe_esg
+    user: breathe_user
